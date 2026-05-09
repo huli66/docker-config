@@ -1,0 +1,4 @@
+**/data/
+*.env
+**/AGENTS.md
+.DS_Store

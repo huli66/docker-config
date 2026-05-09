@@ -1,0 +1,44 @@
+(auth) {
+    basic_auth {
+        huli $2a$14$YFUZsicHYLruGi4YMwhk6esLPb726gGICfkoEjXVNrlH991zxetqS
+    }
+}
+
+huli66.com {
+    import auth
+    reverse_proxy portainer:9000
+}
+
+blog.huli66.com {
+    reverse_proxy openspeedtest:3000
+}
+
+# manager
+docker.huli66.com {
+    import auth
+    reverse_proxy portainer:9000
+}
+dozzle.huli66.com {
+    import auth
+    reverse_proxy dozzle:8080
+}
+
+# tool
+speedtest.huli66.com {
+    reverse_proxy openspeedtest:3000
+}
+jupyter.huli66.com {
+    reverse_proxy jupyter:8888 {
+        header_down -WWW-Authenticate
+    }
+}
+
+# service
+mysql.huli66.com {
+    import auth
+    reverse_proxy adminer:8080
+}
+mq.huli66.com {
+    import auth
+    reverse_proxy rabbitmq:15672
+}

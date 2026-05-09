@@ -1,0 +1,31 @@
+version: "3.8"
+services:
+  
+  speedtest:
+    restart: unless-stopped
+    container_name: openspeedtest
+    ports:
+      - 4000:3000
+      - 4001:3001
+    image: openspeedtest/latest
+    networks:
+      - app_net
+
+  jupyter:
+    restart: unless-stopped
+    image: jupyter/base-notebook
+    container_name: jupyter
+    ports:
+      - 4002:8888
+    env_file: ../../.env
+    volumes:
+      - ../../data/jupyter/notebooks:/home/jovyan/work
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    external: true

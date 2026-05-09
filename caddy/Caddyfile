@@ -1,0 +1,67 @@
+(auth) {
+    basic_auth {
+        huli $2a$14$YFUZsicHYLruGi4YMwhk6esLPb726gGICfkoEjXVNrlH991zxetqS
+    }
+}
+
+(cf_tls) {
+    tls {
+        dns cloudflare {env.CF_API_TOKEN}
+    }
+}
+
+# (proxy) {
+#     reverse_proxy host.docker.internal:{args[0]}
+# }
+
+# (auth_proxy) {
+#     import auth
+#     reverse_proxy host.docker.internal:{args[0]}
+# }
+
+huli66.us {
+    import cf_tls
+    import auth
+    reverse_proxy portainer:9000
+}
+
+blog.huli66.us {
+    import cf_tls
+    reverse_proxy openspeedtest:3000
+}
+
+# manager
+docker.huli66.us {
+    import cf_tls
+    import auth
+    reverse_proxy portainer:9000
+}
+dozzle.huli66.us {
+    import cf_tls
+    import auth
+    reverse_proxy dozzle:8080
+}
+
+# tool
+speedtest.huli66.us {
+    import cf_tls
+    reverse_proxy openspeedtest:3000
+}
+jupyter.huli66.us {
+    import cf_tls
+    reverse_proxy jupyter:8888 {
+        header_down -WWW-Authenticate
+    }
+}
+
+# service
+mysql.huli66.us {
+    import cf_tls
+    import auth
+    reverse_proxy adminer:8080
+}
+mq.huli66.us {
+    import cf_tls
+    import auth
+    reverse_proxy rabbitmq:15672
+}

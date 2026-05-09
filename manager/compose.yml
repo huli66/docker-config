@@ -1,0 +1,57 @@
+version: "3.8"
+services:
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "3000:9443"   # HTTPS（推荐）
+      - "3001:9000"   # HTTP
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ../../data/portainer:/data
+    networks:
+      - app_net
+
+  lazydocker:
+    image: lazyteam/lazydocker
+    container_name: lazydocker
+    restart: unless-stopped
+    stdin_open: true
+    tty: true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - app_net
+
+  dozzle:
+    image: amir20/dozzle:latest
+    container_name: dozzle
+    restart: unless-stopped
+    ports:
+      - "3002:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - app_net
+
+
+  # dockge:
+  #   image: louislam/dockge:1
+  #   container_name: dockge
+  #   restart: unless-stopped
+  #   ports:
+  #     - "5001:5001"
+  #   volumes:
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #     - ./data/dockge:/app/data
+  #     - /opt/stacks:/opt/stacks   # ← 左右路径必须完全一致
+  #   environment:
+  #     DOCKGE_STACKS_DIR: /opt/stacks
+  #   networks:
+  #     - app_net
+
+networks:
+  app_net:
+    external: true

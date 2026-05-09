@@ -1,0 +1,22 @@
+services:
+  caddy:
+    image: caddy:latest
+    container_name: caddy
+    restart: unless-stopped
+    env_file: ../../.env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ../../data/caddy/data:/data
+      - ../../data/caddy/config:/config
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    name: app_net
+    driver: bridge
