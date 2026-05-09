@@ -22,7 +22,7 @@ services:
       - ../../data/jupyter/notebooks:/home/jovyan/work
     environment:
       - JUPYTER_ENABLE_LAB=yes
-      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+      - JUPYTER_PASSWORD=${JUPYTER_PASSWORD}
     networks:
       - app_net
 
