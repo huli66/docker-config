@@ -5,8 +5,9 @@ services:
     ports:
       - "2888:80"  # 宿主机 2888 → 容器 80
     volumes:
-      - ../../data/nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ../../data/nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./conf.d:/etc/nginx/conf.d
+      - ./html:/usr/share/nginx/html
     networks:
       - app_net
 
