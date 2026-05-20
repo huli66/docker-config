@@ -40,9 +40,8 @@ services:
       - DEFAULT_WORKSPACE=/config/workspace
     volumes:
       - ../../data/code-server:/config
-      - ../../data/code-server/workspace:/config/workspace
     ports:
-      - "4003:8080"
+      - "4003:8443"
     restart: unless-stopped
     networks:
       - app_net

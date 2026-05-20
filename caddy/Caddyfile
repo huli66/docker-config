@@ -55,7 +55,7 @@ jupyter.huli66.us {
 }
 code-server.huli66.us {
     import cf_tls
-    reverse_proxy code-server:8080 {
+    reverse_proxy code-server:8443 {
         header_down -WWW-Authenticate
     }
 }
