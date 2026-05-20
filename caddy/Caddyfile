@@ -53,7 +53,7 @@ jupyter.huli66.us {
         header_down -WWW-Authenticate
     }
 }
-code-server.huli66.us {
+code.huli66.us {
     import cf_tls
     reverse_proxy code-server:8443 {
         header_down -WWW-Authenticate
