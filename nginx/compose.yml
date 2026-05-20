@@ -8,6 +8,7 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
       - ./conf.d:/etc/nginx/conf.d
       - ./html:/usr/share/nginx/html
+      - ./snippets:/etc/nginx/snippets
     networks:
       - app_net
 

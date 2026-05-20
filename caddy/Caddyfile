@@ -53,6 +53,12 @@ jupyter.huli66.us {
         header_down -WWW-Authenticate
     }
 }
+code-server.huli66.us {
+    import cf_tls
+    reverse_proxy code-server:8080 {
+        header_down -WWW-Authenticate
+    }
+}
 
 # service
 mysql.huli66.us {

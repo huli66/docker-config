@@ -21,10 +21,29 @@ services:
     volumes:
       - ../../data/jupyter/notebooks:/home/jovyan/work
     environment:
+      - NB_UID=1001
+      - NB_GID=1001
       - JUPYTER_ENABLE_LAB=yes
       - JUPYTER_PASSWORD=${JUPYTER_PASSWORD}
     networks:
       - app_net
+
+  code-server:
+    image: linuxserver/code-server:latest
+    container_name: code-server
+    env_file: ../../.env
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=Asia/Shanghai
+      - PASSWORD=hjj123
+      - DEFAULT_WORKSPACE=/config/workspace
+    volumes:
+      - ../../data/code-server:/config
+      - ../../data/code-server/workspace:/config/workspace
+    ports:
+      - "4003:8080"
+    restart: unless-stopped
 
 networks:
   app_net:

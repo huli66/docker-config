@@ -12,3 +12,5 @@ speedtest-tracker
 uptime-kuma
 gitea
 code-server
+
+grafana 添加数据源
