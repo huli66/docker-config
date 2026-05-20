@@ -19,7 +19,7 @@ services:
       - 4002:8888
     env_file: ../../.env
     volumes:
-      - ../../data/jupyter/notebooks:/home/jovyan/work
+      - ../../data/jupyter/notebooks:/home/jovyan
     environment:
       - NB_UID=1001
       - NB_GID=1001
@@ -44,6 +44,8 @@ services:
     ports:
       - "4003:8080"
     restart: unless-stopped
+    networks:
+      - app_net
 
 networks:
   app_net:
