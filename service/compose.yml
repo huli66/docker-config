@@ -129,7 +129,7 @@ services:
     ports:
       - "5006:80"
     volumes:
-      - pgadmin_data:/var/lib/pgadmin
+      - ../../data/pgadmin:/var/lib/pgadmin
     restart: unless-stopped
 
   redisinsight:
@@ -138,7 +138,7 @@ services:
     ports:
       - "5007:5540"
     volumes:
-      - redisinsight_data:/data
+      - ../../data/redisinsight:/data
     restart: unless-stopped
 
 networks:
