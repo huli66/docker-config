@@ -21,8 +21,8 @@
 
 huli66.us {
     import cf_tls
-    import auth
-    reverse_proxy portainer:9000
+    root * /srv
+    file_server
 }
 
 blog.huli66.us {
@@ -70,4 +70,12 @@ mq.huli66.us {
     import cf_tls
     import auth
     reverse_proxy rabbitmq:15672
+}
+pg.huli66.us {
+    import cf_tls
+    reverse_proxy pgadmin:80
+}
+redis.huli66.us {
+    import cf_tls
+    reverse_proxy redisinsight:5540
 }

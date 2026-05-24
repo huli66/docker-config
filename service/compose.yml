@@ -120,6 +120,27 @@ services:
     networks:
       - app_net
 
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 2969054528@qq.com
+      PGADMIN_DEFAULT_PASSWORD: hjj123
+    ports:
+      - "5006:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    restart: unless-stopped
+
+  redisinsight:
+    image: redis/redisinsight:latest
+    container_name: redisinsight
+    ports:
+      - "5007:5540"
+    volumes:
+      - redisinsight_data:/data
+    restart: unless-stopped
+
 networks:
   app_net:
     external: true
