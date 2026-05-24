@@ -11,7 +11,15 @@ services:
       - ../../data/redis:/data
     command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
     healthcheck:
-      test: ["CMD", "redis-cli", "--no-auth-warning", "-a", "${REDIS_PASSWORD}", "ping"]
+      test:
+        [
+          "CMD",
+          "redis-cli",
+          "--no-auth-warning",
+          "-a",
+          "${REDIS_PASSWORD}",
+          "ping",
+        ]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -37,7 +45,16 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: Asia/Shanghai
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p${MYSQL_ROOT_PASSWORD}"]
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "-uroot",
+          "-p${MYSQL_ROOT_PASSWORD}",
+        ]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -66,8 +83,8 @@ services:
     restart: unless-stopped
     env_file: ../../.env
     ports:
-      - "5003:5672"    # AMQP
-      - "5004:15672"  # Management Web UI
+      - "5003:5672" # AMQP
+      - "5004:15672" # Management Web UI
     volumes:
       - ../../data/rabbitmq:/var/lib/rabbitmq
     environment:
@@ -77,6 +94,28 @@ services:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 15s
       timeout: 10s
+      retries: 5
+    networks:
+      - app_net
+
+  postgres:
+    image: postgres:16
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: hjj123
+      POSTGRES_DB: mydb
+      # 可选:自定义数据目录的子路径
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5005:5432"
+    volumes:
+      - ../../data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d mydb"]
+      interval: 10s
+      timeout: 5s
       retries: 5
     networks:
       - app_net
