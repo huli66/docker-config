@@ -73,7 +73,9 @@ mq.huli66.us {
 }
 pg.huli66.us {
     import cf_tls
-    reverse_proxy pgadmin:80
+    reverse_proxy pgadmin:80 {
+        header_up X-Forwarded-Host {host}
+    }
 }
 redis.huli66.us {
     import cf_tls

@@ -10,7 +10,7 @@ services:
       - ../../data/redis:/data
     command: sh -c "redis-server --appendonly yes --requirepass $$REDIS_PASSWORD"
     healthcheck:
-      test: ["CMD-SHELL", "redis-cli --no-auth-warning -a $REDIS_PASSWORD ping"]
+      test: ["CMD-SHELL", "redis-cli --no-auth-warning -a $$REDIS_PASSWORD ping"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -34,7 +34,7 @@ services:
       MYSQL_USER: myuser
       TZ: Asia/Shanghai
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$MYSQL_ROOT_PASSWORD"]
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -p$$MYSQL_ROOT_PASSWORD"]
       interval: 15s
       timeout: 5s
       retries: 5
@@ -105,7 +105,6 @@ services:
     environment:
       PGADMIN_DEFAULT_EMAIL: 2969054528@qq.com
       PGADMIN_DEFAULT_PASSWORD: hjj123
-      PGADMIN_CONFIG_PROXY_X_PREFIX_COUNT: 1
       PGADMIN_CONFIG_PROXY_X_HOST_COUNT: 1
     ports:
       - "5006:80"
